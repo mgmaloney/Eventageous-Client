@@ -16,6 +16,16 @@ const getItemsBySellerId = async (sellerId) => {
   }
 };
 
+const getSingleItem = async (id) => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/items/${id}`);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return 'getSingleItem failed';
+  }
+};
+
 const createItem = async (payload) => {
   try {
     const response = await axios.post(`${dbUrl}/items`, payload);
@@ -46,6 +56,4 @@ const deleteItem = async (id) => {
   }
 };
 
-export {
-  getItemsBySellerId, createItem, updateItem, deleteItem,
-};
+export { getItemsBySellerId, createItem, updateItem, deleteItem, getSingleItem };
