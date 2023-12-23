@@ -4,9 +4,17 @@ import Loading from '../components/Loading';
 import Signin from '../components/Signin';
 import NavBar from '../components/NavBar';
 import RegisterForm from '../components/RegisterForm';
+import { useEffect, useState } from 'react';
+import { hasOrderCheck } from './data/orderDate';
+import OrderContext from './context/orderContext';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
   const { user, userLoading, updateUser } = useAuth();
+  const [order, setOrder] = useState({});
+
+  useEffect(() => {
+    hasOrderCheck(user.id).then(setOrder);
+  }, [user.id]);
 
   // if user state is null, then show loader
   if (userLoading) {
@@ -17,8 +25,10 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
   if (user) {
     return (
       <>
-        <NavBar /> {/* NavBar only visible if user is logged in and is in every view */}
-        <div className="container">{'valid' in user ? <RegisterForm user={user} updateUser={updateUser} /> : <Component {...pageProps} />}</div>
+        <OrderContext.Provider value={(order, setOrder)}>
+          <NavBar /> {/* NavBar only visible if user is logged in and is in every view */}
+          <div className="container">{'valid' in user ? <RegisterForm user={user} updateUser={updateUser} /> : <Component {...pageProps} />}</div>
+        </OrderContext.Provider>
       </>
     );
   }

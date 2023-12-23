@@ -83,8 +83,8 @@ function ItemForm({ item }) {
 
       {/* PHONE NUMBER FIELD */}
       <Form.Select value={formData.category} name="categoryId" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))}>
-        {categories
-          && categories.map((category) => (
+        {categories &&
+          categories.map((category) => (
             <option key={`category${category.id}`} value={category.id}>
               {category.description}
             </option>
@@ -100,11 +100,20 @@ function ItemForm({ item }) {
 
 ItemForm.propTypes = {
   item: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number,
     availableQuantity: PropTypes.number,
     imageUrl: PropTypes.string,
-    categoryId: PropTypes.number,
-    seller: PropTypes.number,
+    category: PropTypes.shape({
+      id: PropTypes.number,
+      description: PropTypes.string,
+    }),
+    seller: PropTypes.shape({
+      id: PropTypes.number,
+      uid: PropTypes.string,
+      first_name: PropTypes.string,
+      last_name: PropTypes.string,
+    }),
   }).isRequired,
 };
