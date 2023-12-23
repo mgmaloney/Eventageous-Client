@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { registerUser } from '../utils/auth'; // Update with path to registerUser
+import { getSingleUser } from '../utils/data/userData';
 
 function RegisterForm({ user, updateUser }) {
   const router = useRouter();
@@ -38,7 +39,7 @@ function RegisterForm({ user, updateUser }) {
   }, [user]);
 
   useEffect(() => {
-    if (formData.isSeller == true) {
+    if (formData.isSeller === true) {
       setIsSeller(true);
     } else {
       setIsSeller(false);
@@ -53,7 +54,7 @@ function RegisterForm({ user, updateUser }) {
     }));
   };
 
-  const handleCheck = (e) => {
+  const handleCheck = () => {
     if (isSeller) {
       setIsSeller(false);
       setFormData({ ...formData, isSeller: false });
@@ -133,6 +134,11 @@ function RegisterForm({ user, updateUser }) {
 RegisterForm.propTypes = {
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
+    fbUser: PropTypes.shape({
+      email: PropTypes.string,
+    }),
+    id: PropTypes.string,
+    email: PropTypes.string,
   }).isRequired,
   updateUser: PropTypes.func.isRequired,
 };
