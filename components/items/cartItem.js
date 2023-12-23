@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { updateOrder } from '../../utils/data/orderDate';
 
-export default function CartItem({ item, order }) {
+export default function CartItem({ item, order, setOrder }) {
   const [numberInCart, setNumberInCart] = useState(0);
 
   useEffect(() => {
@@ -11,9 +11,9 @@ export default function CartItem({ item, order }) {
     setNumberInCart(arrayOfItem.length);
   }, [order.items, item.id]);
 
-  const handleRemoveItemFromCart = async () => {
+  const handleRemoveItemFromCart = () => {
     const itemsArr = order.items.map((orderItem) => orderItem.id !== item.id);
-    await updateOrder(order.id, { ...order, items: itemsArr });
+    updateOrder(order.id, { ...order, items: itemsArr }).then(setOrder);
   };
 
   const handleQuantity = async (e) => {
@@ -25,7 +25,7 @@ export default function CartItem({ item, order }) {
         itemsArr.push(item.id);
       }
       console.log('🚀 ~ file: cartItem.js:27 ~ handleQuantity ~ itemsArr:', itemsArr);
-      await updateOrder(order.id, { ...order, items: itemsArr });
+      updateOrder(order.id, { ...order, items: itemsArr }).then(setOrder);
     }
   };
 
