@@ -7,13 +7,14 @@ export default function CartItem({ item, order, setOrder }) {
   const [numberInCart, setNumberInCart] = useState(0);
 
   useEffect(() => {
-    const arrayOfItem = order.items.map((orderItem) => orderItem.id === item.id);
+    const arrayOfItem = order.items.filter((orderItem) => orderItem.id === item.id);
     setNumberInCart(arrayOfItem.length);
   }, [order.items, item.id]);
 
   const handleRemoveItemFromCart = () => {
-    const itemsArr = order.items.map((orderItem) => orderItem.id !== item.id);
-    updateOrder(order.id, { ...order, items: itemsArr }).then(setOrder);
+    const itemsArr = order.items.filter((orderItem) => orderItem.id !== item.id);
+    const itemsToKeepInCart = itemsArr.map((itemToKeep) => itemToKeep.id);
+    updateOrder(order.id, { ...order, items: itemsToKeepInCart }).then(setOrder);
   };
 
   const handleQuantity = async (e) => {

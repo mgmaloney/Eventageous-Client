@@ -8,7 +8,9 @@ export default function ItemCard({ item }) {
   const { order, setOrder } = useContext(OrderContext);
   const handleAddToCart = () => {
     if (Object.keys(order).includes('items')) {
-      updateOrder(order.id, { ...order, items: [...order.items, item.id] }).then(setOrder);
+      const existingItemsArr = order.items.map((existingItem) => existingItem.id);
+      console.log('🚀 ~ file: ItemCard.js:12 ~ handleAddToCart ~ existingItemsArr:', existingItemsArr);
+      updateOrder(order.id, { ...order, items: [...existingItemsArr, item.id] }).then(setOrder);
     } else {
       updateOrder(order.id, { ...order, items: [item.id] }).then(setOrder);
     }
