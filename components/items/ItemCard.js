@@ -5,9 +5,13 @@ import OrderContext from '../../utils/context/orderContext';
 import { updateOrder } from '../../utils/data/orderDate';
 
 export default function ItemCard({ item }) {
-  const { order } = useContext(OrderContext);
-  const handleAddToCart = async () => {
-    await updateOrder(order.id, { items: [item.id] });
+  const { order, setOrder } = useContext(OrderContext);
+  const handleAddToCart = () => {
+    if (Object.keys(order).includes('items')) {
+      updateOrder(order.id, { ...order, items: [...order.items, item.id] }).then(setOrder);
+    } else {
+      updateOrder(order.id, { ...order, items: [item.id] }).then(setOrder);
+    }
   };
 
   return (

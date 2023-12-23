@@ -15,8 +15,8 @@ const hasOrderCheck = async (userId) => {
 
 const updateOrder = async (id, payload) => {
   try {
-    const response = await axios.put(`${dbUrl}/orders/${id}`, payload);
-    return response;
+    const { data } = await axios.put(`${dbUrl}/orders/${id}`, payload);
+    return data;
   } catch (e) {
     console.warn(e);
     return 'updateOrder failed';

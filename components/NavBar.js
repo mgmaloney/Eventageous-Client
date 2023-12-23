@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import {
   Navbar, //
@@ -7,9 +7,13 @@ import {
   Nav,
   Button,
 } from 'react-bootstrap';
+import { Cart } from 'react-bootstrap-icons';
 import { signOut } from '../utils/auth';
+import OrderContext from '../utils/context/orderContext';
 
 export default function NavBar() {
+  const { order } = useContext(OrderContext);
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -23,8 +27,8 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link passHref href="/delete-me">
-              <Nav.Link>Delete Me</Nav.Link>
+            <Link passHref href="/mycart/cart">
+              <Cart color="white" size={30} className="cart-nav" />
             </Link>
             <Button variant="danger" onClick={signOut}>
               Sign Out
