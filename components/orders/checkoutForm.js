@@ -21,7 +21,7 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     let itemsTotal = 0;
-    order.items.forEach((item) => {
+    order.items?.forEach((item) => {
       itemsTotal += item.price;
     });
     setFormData({ ...formData, total: itemsTotal });
@@ -64,6 +64,7 @@ export default function CheckoutForm() {
         <Form onSubmit={handleSubmit}>
           {/* FIRST NAME FIELD */}
           <Form.Group className="mb-3" controlId="paymentType">
+            <Form.Label>Select Payment Type</Form.Label>
             <Form.Select name="paymentType" onChange={handleChange} value={formData.paymentType}>
               <option value="credit">Credit</option>
               <option value="paypal">Paypal</option>
@@ -76,8 +77,8 @@ export default function CheckoutForm() {
             <Form.Control name="billingAddress" required value={formData.billingAddress} onChange={handleChange} />
             <Form.Text className="text-muted" />
           </Form.Group>
-
-          <input type="checkbox" value={addressSame} onChange={handleAddressSame} />
+          <Form.Label>Is shipping address the same as the billing address?</Form.Label>
+          <input type="checkbox" checked={addressSame} onChange={handleAddressSame} />
           {addressSame ? (
             ''
           ) : (
@@ -94,7 +95,7 @@ export default function CheckoutForm() {
         </Form>
       </div>
       <div className="total-div">
-        <h4 className="total">{formData.total}</h4>
+        <h4 className="total">Total: ${formData.total}</h4>
       </div>
     </>
   );
