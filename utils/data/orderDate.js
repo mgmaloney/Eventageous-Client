@@ -13,6 +13,16 @@ const hasOrderCheck = async (userId) => {
   }
 };
 
+const getSingleOrder = async (id) => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/orders/${id}`);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return 'getSingleOrder failed';
+  }
+};
+
 const updateOrder = async (id, payload) => {
   try {
     const { data } = await axios.put(`${dbUrl}/orders/${id}`, payload);
@@ -23,4 +33,4 @@ const updateOrder = async (id, payload) => {
   }
 };
 
-export { hasOrderCheck, updateOrder };
+export { hasOrderCheck, getSingleOrder, updateOrder };

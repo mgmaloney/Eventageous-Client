@@ -51,7 +51,7 @@ export default function CheckoutForm() {
     updateOrder(payload)
       .then(() => hasOrderCheck(user.id))
       .then(setOrder)
-      .then(router.push('/previousorders'));
+      .then(router.push('/ordercomplete'));
   };
 
   const handleAddressSame = (e) => {
