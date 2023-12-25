@@ -28,8 +28,12 @@ export default function ItemCard({ item }) {
           <Card.Text>${item.price}</Card.Text>
           <Card.Text>Number Available: {item.availableQuantity}</Card.Text>
           <Card.Text>Category: {item.category.description}</Card.Text>
+
           <Card.Text>
-            Seller: {item.seller.first_name} {item.seller.last_name}
+            Seller:{' '}
+            <Link passHref href={`/seller/${item.seller.id}`}>
+              {item.seller.first_name} {item.seller.last_name}
+            </Link>
           </Card.Text>
           {item.seller.id === user.id ? (
             <Button variant="primary" onClick={handleAddToCart}>

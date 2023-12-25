@@ -4,7 +4,7 @@ import OrderCard from '../../components/orders/orderCard';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function PreviousOrders() {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const [previousOrders, setPreviousOrders] = useState([]);
 
   useEffect(() => {
