@@ -23,6 +23,19 @@ const getSingleOrder = async (id) => {
   }
 };
 
+const getPreviousOrders = async (userId) => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/orders?customerId=${userId}&completed=True`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return 'getAllItems failed';
+  }
+};
+
 const updateOrder = async (id, payload) => {
   try {
     const { data } = await axios.put(`${dbUrl}/orders/${id}`, payload);
@@ -33,4 +46,4 @@ const updateOrder = async (id, payload) => {
   }
 };
 
-export { hasOrderCheck, getSingleOrder, updateOrder };
+export { hasOrderCheck, getSingleOrder, getPreviousOrders, updateOrder };
