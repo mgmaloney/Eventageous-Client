@@ -15,6 +15,18 @@ const getItemsBySellerId = async (sellerId) => {
     return 'getItemsBySellerId failed';
   }
 };
+const getItemsByCategoryId = async (categoryId) => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/items?categoryId=${categoryId}`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return 'getItemsByCategoryId failed';
+  }
+};
 const getAllItems = async () => {
   try {
     const { data } = await axios.get(`${dbUrl}/items`);
@@ -68,4 +80,4 @@ const deleteItem = async (id) => {
   }
 };
 
-export { getAllItems, getItemsBySellerId, createItem, updateItem, deleteItem, getSingleItem };
+export { getAllItems, getItemsBySellerId, getItemsByCategoryId, createItem, updateItem, deleteItem, getSingleItem };

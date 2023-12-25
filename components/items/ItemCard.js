@@ -31,11 +31,11 @@ export default function ItemCard({ item }) {
 
           <Card.Text>
             Seller:{' '}
-            <Link passHref href={`/seller/${item.seller.id}`}>
-              {item.seller.first_name} {item.seller.last_name}
+            <Link className="seller-link" passHref href={`/seller/${item.seller.id}`}>
+              {`${item.seller.first_name} ${item.seller.last_name}`}
             </Link>
           </Card.Text>
-          {item.seller.id === user.id ? (
+          {item.seller.id !== user.id ? (
             <Button variant="primary" onClick={handleAddToCart}>
               Add to Cart
             </Button>
