@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useAuth } from '../../utils/context/authContext';
 import { getItemCategories } from '../../utils/data/categoryData';
-import { createItem, updateItem } from '../../utils/data/itemData';
+import { updateItem, createItem } from '../../utils/data/itemData';
 
 export default function ItemForm({ item }) {
   const router = useRouter();
@@ -54,7 +54,7 @@ export default function ItemForm({ item }) {
   return (
     <Form onSubmit={handleSubmit}>
       {/* FIRST NAME FIELD */}
-      <Form.Group className="mb-3" controlId="name">
+      <Form.Group className="mb-3" controlId="price">
         <Form.Label>Item Name</Form.Label>
         <Form.Control name="name" required value={formData.name} onChange={handleChange} />
         <Form.Text className="text-muted" />
@@ -63,15 +63,15 @@ export default function ItemForm({ item }) {
       {/* LAST NAME FIELD */}
       <Form.Group className="mb-3" controlId="price">
         <Form.Label>Price</Form.Label>
-        <Form.Control type="number" name="price" required value={formData.price} onChange={handleChange} />
-        <Form.Number className="text-muted" />
+        <Form.Control type="float" name="price" required value={formData.price} onChange={handleChange} />
+        <Form.Text className="text-muted" />
       </Form.Group>
 
       {/* ADDRESS FIELD */}
       <Form.Group className="mb-3" controlId="availableQuantity">
         <Form.Label>Available Quantity</Form.Label>
-        <Form.Control type="number" name="availableQuantity" required value={formData.availableQuantity} onChange={handleChange} />
-        <Form.Number className="text-muted" />
+        <Form.Control type="number" name="availableQuantity" min={0} required value={formData.availableQuantity} onChange={handleChange} />
+        <Form.Text className="text-muted" />
       </Form.Group>
 
       {/* PHONE NUMBER FIELD */}
@@ -82,6 +82,7 @@ export default function ItemForm({ item }) {
       </Form.Group>
 
       {/* PHONE NUMBER FIELD */}
+      <Form.Label>Select a category for your item</Form.Label>
       <Form.Select value={formData.category} name="categoryId" onChange={({ target }) => setFormData((prev) => ({ ...prev, [target.name]: target.value }))}>
         {categories &&
           categories.map((category) => (
@@ -115,5 +116,16 @@ ItemForm.propTypes = {
       first_name: PropTypes.string,
       last_name: PropTypes.string,
     }),
-  }).isRequired,
+  }),
+};
+
+ItemForm.defaultProps = {
+  item: {
+    name: '',
+    price: 0,
+    availableQuantity: 0,
+    imageUrl: '',
+    categoryId: '',
+    seller: 0,
+  },
 };

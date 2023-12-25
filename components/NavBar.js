@@ -7,6 +7,7 @@ import {
   Nav,
   Button,
 } from 'react-bootstrap';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Cart } from 'react-bootstrap-icons';
 import { signOut } from '../utils/auth';
 import OrderContext from '../utils/context/orderContext';
@@ -20,7 +21,7 @@ export default function NavBar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Link passHref href="/">
-          <Navbar.Brand>CHANGE ME</Navbar.Brand>
+          <Navbar.Brand>Definitely Not Amazon</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

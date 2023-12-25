@@ -1,5 +1,10 @@
 import ItemForm from '../../components/items/ItemForm';
 
 export default function CreateItem() {
-  return <ItemForm />;
+  console.log('ItemForm', ItemForm);
+  return (
+    <>
+      <ItemForm item={{}} />
+    </>
+  );
 }
