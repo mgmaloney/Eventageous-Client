@@ -10,9 +10,11 @@ import {
 import { Cart } from 'react-bootstrap-icons';
 import { signOut } from '../utils/auth';
 import OrderContext from '../utils/context/orderContext';
+import { useAuth } from '../utils/context/authContext';
 
 export default function NavBar() {
   const { order } = useContext(OrderContext);
+  const { user } = useAuth();
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -27,6 +29,18 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
+            {user.isSeller ? (
+              <>
+                <Link passHref href="/myitems">
+                  <Nav.Link>My Items</Nav.Link>
+                </Link>
+                <Link passHref href="/items/new">
+                  <Nav.Link>Add Item to Inventory</Nav.Link>
+                </Link>
+              </>
+            ) : (
+              ''
+            )}
             <Link passHref href="/mycart/cart">
               <Cart color="white" size={30} className="cart-nav" />
             </Link>

@@ -7,7 +7,7 @@ import { useAuth } from '../../utils/context/authContext';
 import { getItemCategories } from '../../utils/data/categoryData';
 import { createItem, updateItem } from '../../utils/data/itemData';
 
-function ItemForm({ item }) {
+export default function ItemForm({ item }) {
   const router = useRouter();
   const { user } = useAuth();
   const [categories, setCategories] = useState([]);

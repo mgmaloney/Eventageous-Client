@@ -9,9 +9,9 @@ export default function CartItem({ item, order, setOrder }) {
   useEffect(() => {
     const arrayOfItem = order.items.filter((orderItem) => orderItem.id === item.id);
     setNumberInCart(arrayOfItem.length);
-  }, [order.items, item.id]);
+  }, [order, order.items, item.id]);
 
-  const handleRemoveItemFromCart = () => {
+  const handleRemoveItemFromCart = async () => {
     const itemsArr = order.items.filter((orderItem) => orderItem.id !== item.id);
     const itemsToKeepInCart = itemsArr.map((itemToKeep) => itemToKeep.id);
     updateOrder(order.id, { ...order, items: itemsToKeepInCart }).then(setOrder);
@@ -21,12 +21,13 @@ export default function CartItem({ item, order, setOrder }) {
     if (e.target.value === 0) {
       await handleRemoveItemFromCart();
     } else {
-      const itemsArr = order.items.map((orderItem) => orderItem.id !== item.id);
+      const itemsArr = order.items.filter((orderItem) => orderItem.id !== item.id);
+      const itemIds = itemsArr.map((orderItem) => orderItem.id);
       for (let i = 1; i <= numberInCart; i++) {
-        itemsArr.push(item.id);
+        itemIds.push(item.id);
       }
-      console.log('🚀 ~ file: cartItem.js:27 ~ handleQuantity ~ itemsArr:', itemsArr);
-      updateOrder(order.id, { ...order, items: itemsArr }).then(setOrder);
+      const updatedOrder = await updateOrder(order.id, { ...order, items: itemIds });
+      setOrder(updatedOrder);
     }
   };
 

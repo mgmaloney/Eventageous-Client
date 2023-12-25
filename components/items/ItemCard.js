@@ -1,18 +1,21 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
+import Link from 'next/link';
 import { Card, Button } from 'react-bootstrap';
 import OrderContext from '../../utils/context/orderContext';
 import { updateOrder } from '../../utils/data/orderDate';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function ItemCard({ item }) {
   const { order, setOrder } = useContext(OrderContext);
-  const handleAddToCart = () => {
+  const { user } = useAuth();
+  const handleAddToCart = async () => {
     if (Object.keys(order).includes('items')) {
       const existingItemsArr = order.items.map((existingItem) => existingItem.id);
       console.log('🚀 ~ file: ItemCard.js:12 ~ handleAddToCart ~ existingItemsArr:', existingItemsArr);
-      updateOrder(order.id, { ...order, items: [...existingItemsArr, item.id] }).then(setOrder);
+      await updateOrder(order.id, { ...order, items: [...existingItemsArr, item.id] }).then(setOrder);
     } else {
-      updateOrder(order.id, { ...order, items: [item.id] }).then(setOrder);
+      await updateOrder(order.id, { ...order, items: [item.id] }).then(setOrder);
     }
   };
 
@@ -28,9 +31,15 @@ export default function ItemCard({ item }) {
           <Card.Text>
             Seller: {item.seller.first_name} {item.seller.last_name}
           </Card.Text>
-          <Button variant="primary" onClick={handleAddToCart}>
-            Add to Cart
-          </Button>
+          {item.seller.id === user.id ? (
+            <Button variant="primary" onClick={handleAddToCart}>
+              Add to Cart
+            </Button>
+          ) : (
+            <Link passHref href={`/items/edit/${item.id}`}>
+              <Button>Edit Item</Button>
+            </Link>
+          )}
         </Card.Body>
       </Card>
     </div>
