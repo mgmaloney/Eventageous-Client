@@ -10,16 +10,12 @@ export default function SellerPage() {
 
   useEffect(() => {
     getItemsBySellerId(id).then(setSellerItems);
-  }, []);
+  }, [id]);
 
   return (
     <>
-      {sellerItems && (
-        <h2>
-          {sellerItems[0].seller.first_name} {sellerItems[0].seller.last_name}'s Available Items
-        </h2>
-      )}
-      {sellerItems && sellerItems.map((item) => <ItemCard item={item} />)}
+      {sellerItems && <h2>{/* {sellerItems[0].seller.first_name} {sellerItems[0].seller.last_name}'s Available Items */}</h2>}
+      {/* {sellerItems && sellerItems?.map((item) => <ItemCard item={item} />)} */}
     </>
   );
 }

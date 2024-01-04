@@ -18,7 +18,7 @@ export default function ItemForm({ item }) {
     availableQuantity: 0,
     imageUrl: '',
     categoryId: '',
-    seller: user.id,
+    sellerId: user.id,
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function ItemForm({ item }) {
     if (item.id) {
       updateItem(payload).then(router.push('/profile'));
     } else {
-      createItem(payload).then(router.push('/seller/items'));
+      createItem(payload).then(router.push('/myitems'));
     }
   };
 

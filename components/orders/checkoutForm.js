@@ -10,7 +10,7 @@ export default function CheckoutForm() {
   const router = useRouter();
   const { user } = useAuth();
   const { order, setOrder } = useContext(OrderContext);
-  const [addressSame, setAddressSame] = useState(false);
+  const [isAddressSame, setIsAddressSame] = useState(false);
 
   const [formData, setFormData] = useState({
     paymentType: '',
@@ -21,9 +21,11 @@ export default function CheckoutForm() {
 
   useEffect(() => {
     let itemsTotal = 0;
-    order.items?.forEach((item) => {
-      itemsTotal += item.price;
-    });
+    if (order.items) {
+      order.items.forEach((item) => {
+        itemsTotal += Number(item.price);
+      });
+    }
     setFormData({ ...formData, total: itemsTotal });
   }, [order.items]);
 
@@ -54,8 +56,12 @@ export default function CheckoutForm() {
       .then(router.push('/ordercomplete'));
   };
 
-  const handleAddressSame = (e) => {
-    setAddressSame(e.target.value);
+  const handleAddressSame = () => {
+    if (isAddressSame) {
+      setIsAddressSame(false);
+    } else {
+      setIsAddressSame(true);
+    }
   };
 
   return (
@@ -78,8 +84,8 @@ export default function CheckoutForm() {
             <Form.Text className="text-muted" />
           </Form.Group>
           <Form.Label>Is shipping address the same as the billing address?</Form.Label>
-          <input type="checkbox" checked={addressSame} onChange={handleAddressSame} />
-          {addressSame ? (
+          <input type="checkbox" onChange={handleAddressSame} />
+          {isAddressSame ? (
             ''
           ) : (
             <Form.Group className="mb-3" controlId="shippingAddress">
