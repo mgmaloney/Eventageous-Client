@@ -3,31 +3,27 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { Card, Button } from 'react-bootstrap';
 import OrderContext from '../../utils/context/orderContext';
-import { updateOrder } from '../../utils/data/orderDate';
+import { addTicketToOrder, updateOrder } from '../../utils/data/orderDate';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function EventCard({ event }) {
   const { order, setOrder } = useContext(OrderContext);
   const { user } = useAuth();
+
   const handleAddToCart = async () => {
-    if (Object.keys(order).includes('events')) {
-      const existingEventsArr = order.events.map((existingEvent) => existingEvent.id);
-      console.log('🚀 ~ file: EventCard.js:12 ~ handleAddToCart ~ existingEventsArr:', existingEventsArr);
-      await updateOrder(order.id, { ...order, events: [...existingEventsArr, event.id] }).then(setOrder);
-    } else {
-      await updateOrder(order.id, { ...order, events: [event.id] }).then(setOrder);
-    }
+    alert(`Ticket to ${event.name} added to cart!`);
+    addTicketToOrder(order.id, { eventId: event.id }).then(setOrder);
   };
 
   return (
     <div className="event-card-container">
-      <Card className="event-card">
+      <Card className="event-card" style={{ width: '300px' }}>
         <Card.Header>{event.name}</Card.Header>
-        <Card.Img className="event-card-img" src={event.imageUrl} />
+        <Card.Img variant="top" className="event-card-img" src={event.image_url} style={{ width: '200px' }} />
         <Card.Body>
-          <Card.Text>${event.description}</Card.Text>
-          <Card.Text>${event.ticket.price}</Card.Text>
-          <Card.Text>Tickets Available: {event.availableQuantity}</Card.Text>
+          <Card.Text>{event.description}</Card.Text>
+          <Card.Text>${event.ticket?.price}</Card.Text>
+          <Card.Text>Tickets Available: {event.tickets_available}</Card.Text>
           <Card.Text>
             Seller:{' '}
             <Link className="seller-link" passHref href={`/seller/${event.seller.id}`}>

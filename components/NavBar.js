@@ -32,17 +32,17 @@ export default function NavBar() {
             </Link>
             {user.isSeller ? (
               <>
-                <Link passHref href="/myitems">
+                <Link passHref href="/myevents">
                   <Nav.Link>My Items</Nav.Link>
                 </Link>
-                <Link passHref href="/items/new">
+                <Link passHref href="/events/new">
                   <Nav.Link>Add Item to Inventory</Nav.Link>
                 </Link>
               </>
             ) : (
               ''
             )}
-            <Link passHref href="/mycart/cart">
+            <Link passHref href="/mycart/Cart">
               <Cart color="white" size={30} className="cart-nav" />
             </Link>
             <Button variant="danger" onClick={signOut}>

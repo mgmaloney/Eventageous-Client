@@ -3,7 +3,7 @@ import { getItemsBySellerId } from '../utils/data/itemData';
 import { useAuth } from '../utils/context/authContext';
 import ItemCard from '../components/items/ItemCard';
 
-export default function MyItems() {
+export default function MyEvents() {
   const { user } = useAuth();
   const [myItems, setMyItems] = useState([]);
 

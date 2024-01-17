@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAllEvents } from '../utils/data/eventData';
-import ItemCard from '../components/items/EventCard';
+import EventCard from '../components/events/EventCard';
 
 function Home() {
   const [events, setEvents] = useState([]);
@@ -11,7 +11,7 @@ function Home() {
 
   return (
     <div className="shopping">
-      <div className="events">{events && events.map((item) => <ItemCard item={item} />)}</div>
+      <div className="events">{events && events.map((event) => <EventCard event={event} />)}</div>
     </div>
   );
 }

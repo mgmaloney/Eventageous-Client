@@ -1,33 +1,48 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { updateOrder } from '../../utils/data/orderDate';
+import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder, removeTicketFromOrder, updateOrder } from '../../utils/data/orderDate';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function CartTicket({ ticket, order, setOrder }) {
   const [numberInCart, setNumberInCart] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const arrayOfTickets = order.tickets.filter((orderTicket) => orderTicket.id === ticket.id);
-    setNumberInCart(arrayOfTickets.length);
+    if (order.id) {
+      const arrayOfTickets = order.tickets?.filter((orderTicket) => orderTicket.id === ticket.id);
+      setNumberInCart(arrayOfTickets.length);
+    }
   }, [order, order.tickets, ticket.id]);
 
   const handleRemoveTicketFromCart = async () => {
-    const ticketsArr = order.tickets.filter((orderTicket) => orderTicket.id !== ticket.id);
-    const ticketsToKeepInCart = ticketsArr.map((ticketToKeep) => ticketToKeep.id);
-    updateOrder(order.id, { ...order, tickets: ticketsToKeepInCart }).then(setOrder);
+    removeEventTicketsFromOrder(order.id, { ticketId: ticket.id }).then(async (response) => {
+      if (typeof response === 'string') {
+        await hasOrderCheck(user.id);
+      } else {
+        await setOrder(response);
+      }
+    });
   };
 
   const handleQuantity = async (e) => {
+    setNumberInCart(e.target.value);
     if (e.target.value === 0) {
-      await handleRemoveTicketFromCart();
+      removeEventTicketsFromOrder().then(async (response) => {
+        if (typeof response === 'string') {
+          await hasOrderCheck(user.id);
+        } else {
+          await setOrder(response);
+        }
+      });
     } else {
-      const ticketsArr = order.tickets.filter((orderTicket) => orderTicket.id !== ticket.id);
-      const ticketIds = ticketsArr.map((orderTicket) => orderTicket.id);
-      for (let i = 1; i <= numberInCart; i++) {
-        ticketIds.push(ticket.id);
-      }
-      const updatedOrder = await updateOrder(order.id, { ...order, tickets: ticketIds });
-      setOrder(updatedOrder);
+      changeTicketsInOrder(order.id, { eventId: ticket.event.id, numberToAdd: e.target.value }).then(async (response) => {
+        if (typeof response === 'string') {
+          await hasOrderCheck(user.id);
+        } else {
+          await setOrder(response);
+        }
+      });
     }
   };
 
