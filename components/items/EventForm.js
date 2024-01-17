@@ -12,6 +12,7 @@ export default function EventForm({ event }) {
 
   const [formData, setFormData] = useState({
     name: '',
+    description: '',
     ticketPrice: 0,
     ticketsAvailable: 0,
     imageUrl: '',
@@ -21,9 +22,9 @@ export default function EventForm({ event }) {
 
   useEffect(() => {
     if (event.id) {
-      setFormData({name: event.name, ticketPrice: event.ticket.price, ticketsAvailable: event.tickets_available, imageUrl: event.image_url, date: event.date, sellerId: user.id});
+      setFormData({ name: event.name, ticketPrice: event.ticket.price, ticketsAvailable: event.ticketsAvailable, imageUrl: event.imageUrl, date: event.date, sellerId: user.id });
     }
-  }, [event]);
+  }, [event.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,6 +85,7 @@ EventForm.propTypes = {
   event: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
+    date: PropTypes.string,
     price: PropTypes.number,
     ticketsAvailable: PropTypes.number,
     imageUrl: PropTypes.string,
@@ -102,6 +104,8 @@ EventForm.propTypes = {
 EventForm.defaultProps = {
   event: {
     name: '',
+    description: '',
+    date: '',
     ticketPrice: 0,
     ticketsAvailable: 0,
     imageUrl: '',
