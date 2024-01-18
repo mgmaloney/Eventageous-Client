@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { Card, Button } from 'react-bootstrap';
 import OrderContext from '../../utils/context/orderContext';
-import { addTicketToOrder, updateOrder } from '../../utils/data/orderDate';
+import { addTicketToOrder, hasOrderCheck } from '../../utils/data/orderDate';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function EventCard({ event }) {
@@ -12,7 +12,13 @@ export default function EventCard({ event }) {
 
   const handleAddToCart = async () => {
     alert(`Ticket to ${event.name} added to cart!`);
-    addTicketToOrder(order.id, { eventId: event.id }).then(setOrder);
+    addTicketToOrder(order.id, { userId: user.id, eventId: event.id, ticketId: event.ticket.id }).then(async (response) => {
+      if (typeof response === 'string') {
+        await hasOrderCheck(user.id).then(setOrder);
+      } else {
+        await setOrder(response);
+      }
+    });
   };
 
   return (

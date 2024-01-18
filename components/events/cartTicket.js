@@ -5,7 +5,7 @@ import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder, remov
 import { useAuth } from '../../utils/context/authContext';
 
 export default function CartTicket({ ticket, order, setOrder }) {
-  const [numberInCart, setNumberInCart] = useState(0);
+  const [numberInCart, setNumberInCart] = useState('');
   const { user } = useAuth();
 
   useEffect(() => {
@@ -16,29 +16,31 @@ export default function CartTicket({ ticket, order, setOrder }) {
   }, [order, order.tickets, ticket.id]);
 
   const handleRemoveTicketFromCart = async () => {
-    removeEventTicketsFromOrder(order.id, { ticketId: ticket.id }).then(async (response) => {
+    removeEventTicketsFromOrder(order.id, { userId: user.id, ticketId: ticket.id }).then(async (response) => {
       if (typeof response === 'string') {
-        await hasOrderCheck(user.id);
+        await hasOrderCheck(user.id).then(setOrder);
       } else {
         await setOrder(response);
       }
     });
   };
 
-  const handleQuantity = async (e) => {
-    setNumberInCart(e.target.value);
-    if (e.target.value === 0) {
-      removeEventTicketsFromOrder().then(async (response) => {
+  useEffect(() => {
+    changeTicketsInOrder(order.id, { userId: user.id, eventId: ticket.event.id, ticketId: ticket.id, numberToAdd: Number(numberInCart) }).then(async (response) => {
+      if (typeof response === 'string') {
+        await hasOrderCheck(user.id).then(setOrder);
+      } else {
+        await setOrder(response);
+      }
+    });
+  }, [numberInCart]);
+
+  const handleQuantity = (e) => {
+    setNumberInCart(Number(e.target.value));
+    if (e.target.value === '0') {
+      removeEventTicketsFromOrder({ userId: user.id, ticketId: ticket.id }).then(async (response) => {
         if (typeof response === 'string') {
-          await hasOrderCheck(user.id);
-        } else {
-          await setOrder(response);
-        }
-      });
-    } else {
-      changeTicketsInOrder(order.id, { eventId: ticket.event.id, numberToAdd: e.target.value }).then(async (response) => {
-        if (typeof response === 'string') {
-          await hasOrderCheck(user.id);
+          await hasOrderCheck(user.id).then(setOrder);
         } else {
           await setOrder(response);
         }
@@ -58,7 +60,7 @@ export default function CartTicket({ ticket, order, setOrder }) {
           <Card.Text>${ticket.price}</Card.Text>
           <label>
             Quantity:
-            <input type="number" min="0" max={ticket.event.tickets_available} value={numberInCart} name="numberInCart" onChange={handleQuantity} />
+            <input type="number" min="1" max={ticket.event.tickets_available} value={numberInCart} name="numberInCart" onChange={handleQuantity} />
           </label>
           <Card.Text className="ticket-quant-total">${ticket.price * numberInCart}</Card.Text>
           <Button variant="danger" onClick={handleRemoveTicketFromCart}>
