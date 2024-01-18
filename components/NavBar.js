@@ -33,10 +33,10 @@ export default function NavBar() {
             {user.isSeller ? (
               <>
                 <Link passHref href="/myevents">
-                  <Nav.Link>My Items</Nav.Link>
+                  <Nav.Link>My Events</Nav.Link>
                 </Link>
                 <Link passHref href="/events/new">
-                  <Nav.Link>Add Item to Inventory</Nav.Link>
+                  <Nav.Link>Create New Event</Nav.Link>
                 </Link>
               </>
             ) : (

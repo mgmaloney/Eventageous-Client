@@ -15,18 +15,7 @@ const getEventsBySellerId = async (sellerId) => {
     return 'getEventsBySellerId failed';
   }
 };
-const getEventsByCategoryId = async (categoryId) => {
-  try {
-    const { data } = await axios.get(`${dbUrl}/events?categoryId=${categoryId}`);
-    if (data.length > 0) {
-      return data;
-    }
-    return [];
-  } catch (e) {
-    console.warn(e);
-    return 'getEventsByCategoryId failed';
-  }
-};
+
 const getAllEvents = async () => {
   try {
     const { data } = await axios.get(`${dbUrl}/events`);
@@ -80,4 +69,4 @@ const deleteEvent = async (id) => {
   }
 };
 
-export { getAllEvents, getEventsBySellerId, getEventsByCategoryId, createEvent, updateEvent, deleteEvent, getSingleEvent };
+export { getAllEvents, getEventsBySellerId, createEvent, updateEvent, deleteEvent, getSingleEvent };

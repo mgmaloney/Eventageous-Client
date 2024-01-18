@@ -62,7 +62,7 @@ export default function CheckoutForm() {
     updateOrder(order.id, payload)
       .then(() => hasOrderCheck(user.id))
       .then(setOrder)
-      .then(router.push(`/ordercomplete/${order.id}`));
+      .then(router.push(`orders/orderComplete/${order.id}`));
   };
 
   return (
