@@ -7,12 +7,25 @@ import { useAuth } from '../utils/context/authContext';
 
 function Home() {
   const [events, setEvents] = useState([]);
+  const [activeEvents, setActiveEvents] = useState([]);
   const { user } = useAuth();
   const { order, setOrder } = useContext(OrderContext);
 
   useEffect(() => {
     getAllEvents().then(setEvents);
   }, []);
+
+  useEffect(() => {
+    const today = Date.parse(new Date(Date.now()));
+    const eventsActive = [];
+    events.forEach((event) => {
+      const eventDate = Date.parse(event.date);
+      if (eventDate >= today) {
+        eventsActive.push(event);
+      }
+    });
+    setActiveEvents(eventsActive);
+  }, [events]);
 
   useEffect(() => {
     hasOrderCheck(user.id).then(setOrder);

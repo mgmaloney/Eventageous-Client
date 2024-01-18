@@ -57,3 +57,9 @@ body {
   display: flex;
   justify-content: flex-end;
 }
+
+.event-card-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

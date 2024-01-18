@@ -30,6 +30,9 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
+            <Link passHref href="/mytickets">
+              <Nav.Link>My Tickets</Nav.Link>
+            </Link>
             {user.isSeller ? (
               <>
                 <Link passHref href="/myevents">
