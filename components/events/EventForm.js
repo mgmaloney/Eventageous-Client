@@ -73,10 +73,13 @@ export default function EventForm({ event }) {
         <Form.Control name="imageUrl" required value={formData.imageUrl} onChange={handleChange} />
         <Form.Text className="text-muted" />
       </Form.Group>
-      <input type="datetime" name="date" onChange={handleChange} value={formData.date} />
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
+      <Form.Label>Set a date and time for your event</Form.Label>
+      <div className="date-submit">
+        <input type="datetime-local" name="date" onChange={handleChange} value={formData.date} />
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </div>
     </Form>
   );
 }

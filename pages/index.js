@@ -7,19 +7,20 @@ import { useAuth } from '../utils/context/authContext';
 
 function Home() {
   const [events, setEvents] = useState([]);
-  const {user} = useAuth()
-  const {order, setOrder} = useContext(OrderContext)
+  const { user } = useAuth();
+  const { order, setOrder } = useContext(OrderContext);
 
   useEffect(() => {
     getAllEvents().then(setEvents);
   }, []);
 
   useEffect(() => {
-    hasOrderCheck(user.id).then(setOrder)
-  }, [])
+    hasOrderCheck(user.id).then(setOrder);
+  }, []);
 
   return (
     <div className="shopping">
+      <h2>Events!</h2>
       <div className="events">{events && events.map((event) => <EventCard event={event} />)}</div>
     </div>
   );

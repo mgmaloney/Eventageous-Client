@@ -95,4 +95,27 @@ const removeEventTicketsFromOrder = async (orderId, payload) => {
   }
 };
 
-export { hasOrderCheck, getSingleOrder, getDiscreteEventTickets, getPreviousOrders, updateOrder, addTicketToOrder, changeTicketsInOrder, removeTicketFromOrder, removeEventTicketsFromOrder };
+const getCompletedOrdersBySellerId = async (sellerId) => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/orders/?sellerId=${sellerId}&completed=True`, payload);
+    return data;
+  } catch (e) {
+    console.warn(e);
+    return 'updateOrder failed';
+  }
+};
+
+const getAllOrders = async () => {
+  try {
+    const { data } = await axios.get(`${dbUrl}/orders`);
+    if (data.length > 0) {
+      return data;
+    }
+    return [];
+  } catch (e) {
+    console.warn(e);
+    return 'getSingleOrder failed';
+  }
+};
+
+export { hasOrderCheck, getAllOrders, getSingleOrder, getDiscreteEventTickets, getPreviousOrders, updateOrder, addTicketToOrder, changeTicketsInOrder, removeTicketFromOrder, removeEventTicketsFromOrder };

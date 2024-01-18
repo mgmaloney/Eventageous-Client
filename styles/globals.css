@@ -30,3 +30,30 @@ body {
 .profle-btn {
   margin-right: 15%;
 }
+
+.date-submit {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-submit * {
+  margin: 1rem 0rem 1rem 0rem;
+}
+
+.checkout-tickets {
+  border: 2px solid black;
+  background-color: white;
+}
+.checkout-tickets * {
+  margin: 0.5rem;
+}
+
+.ticket-checkout {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total-div {
+  display: flex;
+  justify-content: flex-end;
+}

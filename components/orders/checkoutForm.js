@@ -67,6 +67,20 @@ export default function CheckoutForm() {
 
   return (
     <>
+      <h2>Checkout</h2>
+      <h3>Tickets on Order</h3>
+      <div className="checkout-tickets">
+        {order.tickets &&
+          order.tickets.map((ticket) => (
+            <div className="ticket-checkout">
+              <p>{ticket.event.name}</p>
+              <p>${ticket.price}</p>
+            </div>
+          ))}
+      </div>
+      <div className="total-div">
+        <h4 className="total">Total: ${total}</h4>
+      </div>
       <div className="checkout-form">
         <Form onSubmit={handleSubmit}>
           {/* FIRST NAME FIELD */}
@@ -83,12 +97,9 @@ export default function CheckoutForm() {
             <Form.Text className="text-muted" />
           </Form.Group>
           <Button variant="primary" type="submit">
-            Submit
+            Checkout
           </Button>
         </Form>
-      </div>
-      <div className="total-div">
-        <h4 className="total">Total: ${total}</h4>
       </div>
     </>
   );

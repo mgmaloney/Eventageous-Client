@@ -21,7 +21,7 @@ export default function NavBar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Link passHref href="/">
-          <Navbar.Brand>Definitely Not Amazon</Navbar.Brand>
+          <Navbar.Brand>Eventageous</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -37,6 +37,9 @@ export default function NavBar() {
                 </Link>
                 <Link passHref href="/events/new">
                   <Nav.Link>Create New Event</Nav.Link>
+                </Link>
+                <Link passHref href="/myrevenue">
+                  <Nav.Link>My Ticket Sales</Nav.Link>
                 </Link>
               </>
             ) : (
