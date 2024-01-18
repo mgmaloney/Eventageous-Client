@@ -5,7 +5,7 @@ import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder, remov
 import { useAuth } from '../../utils/context/authContext';
 
 export default function CartTicket({ ticket, order, setOrder }) {
-  const [numberInCart, setNumberInCart] = useState();
+  const [numberInCart, setNumberInCart] = useState(0);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function CartTicket({ ticket, order, setOrder }) {
   };
 
   useEffect(() => {
-    if (numberInCart != 0) {
+    if (numberInCart > 0) {
       changeTicketsInOrder(order.id, { userId: user.id, eventId: ticket.event.id, ticketId: ticket.id, numberToAdd: Number(numberInCart) }).then(async (response) => {
         if (typeof response === 'string') {
           await hasOrderCheck(user.id).then(setOrder);
@@ -41,15 +41,6 @@ export default function CartTicket({ ticket, order, setOrder }) {
 
   const handleQuantity = (e) => {
     setNumberInCart(Number(e.target.value));
-    if (e.target.value == 0) {
-      removeEventTicketsFromOrder({ userId: user.id, ticketId: ticket.id }).then(async (response) => {
-        if (typeof response === 'string') {
-          await hasOrderCheck(user.id).then(setOrder);
-        } else {
-          await setOrder(response);
-        }
-      });
-    }
   };
 
   return (
