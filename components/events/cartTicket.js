@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder, removeTicketFromOrder, updateOrder } from '../../utils/data/orderDate';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function CartTicket({ ticket, order, setOrder }) {
-  const [numberInCart, setNumberInCart] = useState('');
+  const [numberInCart, setNumberInCart] = useState();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -16,28 +16,32 @@ export default function CartTicket({ ticket, order, setOrder }) {
   }, [order, order.tickets, ticket.id]);
 
   const handleRemoveTicketFromCart = async () => {
-    removeEventTicketsFromOrder(order.id, { userId: user.id, ticketId: ticket.id }).then(async (response) => {
-      if (typeof response === 'string') {
-        await hasOrderCheck(user.id).then(setOrder);
-      } else {
-        await setOrder(response);
-      }
-    });
+    if (window.confirm(`Remove all ${ticket.event.name} tickets from order?`)) {
+      removeEventTicketsFromOrder(order.id, { userId: user.id, ticketId: ticket.id }).then(async (response) => {
+        if (typeof response === 'string') {
+          await hasOrderCheck(user.id).then(setOrder);
+        } else {
+          await setOrder(response);
+        }
+      });
+    }
   };
 
   useEffect(() => {
-    changeTicketsInOrder(order.id, { userId: user.id, eventId: ticket.event.id, ticketId: ticket.id, numberToAdd: Number(numberInCart) }).then(async (response) => {
-      if (typeof response === 'string') {
-        await hasOrderCheck(user.id).then(setOrder);
-      } else {
-        await setOrder(response);
-      }
-    });
+    if (numberInCart != 0) {
+      changeTicketsInOrder(order.id, { userId: user.id, eventId: ticket.event.id, ticketId: ticket.id, numberToAdd: Number(numberInCart) }).then(async (response) => {
+        if (typeof response === 'string') {
+          await hasOrderCheck(user.id).then(setOrder);
+        } else {
+          await setOrder(response);
+        }
+      });
+    }
   }, [numberInCart]);
 
   const handleQuantity = (e) => {
     setNumberInCart(Number(e.target.value));
-    if (e.target.value === '0') {
+    if (e.target.value == 0) {
       removeEventTicketsFromOrder({ userId: user.id, ticketId: ticket.id }).then(async (response) => {
         if (typeof response === 'string') {
           await hasOrderCheck(user.id).then(setOrder);
