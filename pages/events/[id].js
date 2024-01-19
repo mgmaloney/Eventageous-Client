@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
+import { format } from 'date-fns';
 import { deleteEvent, getSingleEvent } from '../../utils/data/eventData';
 import { addTicketToOrder, hasOrderCheck } from '../../utils/data/orderDate';
 import OrderContext from '../../utils/context/orderContext';
@@ -13,11 +14,15 @@ export default function EventDetails() {
   const { user } = useAuth();
   const { id } = router.query;
   const [event, setEvent] = useState({});
-  const { pathname } = router.pathname;
+  const [eventDate, setEventDate] = useState('');
 
   useEffect(() => {
     getSingleEvent(id).then(setEvent);
   }, [id]);
+
+  useEffect(() => {
+    setEventDate(new Date(event.date));
+  }, [event]);
 
   const handleAddToCart = async () => {
     alert(`Ticket to ${event.name} added to cart!`);
@@ -45,14 +50,14 @@ export default function EventDetails() {
               <Card.Text>{event.description}</Card.Text>
               <Card.Text>Ticket Price ${event.ticket?.price}</Card.Text>
               <Card.Text>Tickets Available: {event.tickets_available}</Card.Text>
-              <Card.Text>Date: {event.date}</Card.Text>
+              <Card.Text>{format(new Date(eventDate), 'yyyy-M-d, h:mmbbb')}</Card.Text>
               <Card.Text>
                 Seller:{' '}
                 <Link className="seller-link" passHref href={`/seller/${event.seller?.id}`}>
                   {`${event.seller?.first_name} ${event.seller?.last_name}`}
                 </Link>
               </Card.Text>
-              {event.seller?.id !== user.id && !pathname.includes('past') ? (
+              {event.seller?.id !== user.id ? (
                 <Button variant="primary" onClick={handleAddToCart}>
                   Add ticket to Cart
                 </Button>
