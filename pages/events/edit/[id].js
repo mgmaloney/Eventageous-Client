@@ -1,16 +1,16 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getSingleItem } from '../../../utils/data/itemData';
-import ItemForm from '../../../components/items/ItemForm';
+import EventForm from '../../../components/events/EventForm';
+import { getSingleEvent } from '../../../utils/data/eventData';
 
 export default function EditItem() {
   const router = useRouter();
-  const [id] = router.query;
-  const [item, setItem] = useState({});
+  const { id } = router.query;
+  const [event, setEvent] = useState({});
 
   useEffect(() => {
-    getSingleItem(id).then(setItem);
+    getSingleEvent(id).then(setEvent);
   }, [id]);
 
-  return <ItemForm item={item} />;
+  return <EventForm event={event} />;
 }

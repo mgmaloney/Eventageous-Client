@@ -17,7 +17,7 @@ export default function EventCard({ event }) {
   const [today, setToday] = useState();
 
   useEffect(() => {
-    const todaysDate = Date.now();
+    const todaysDate = Date.parse(Date.now());
     const theEventDate = Date.parse(new Date(event.date));
     setToday(todaysDate);
     setEventDate(theEventDate);

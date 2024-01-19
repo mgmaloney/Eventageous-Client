@@ -36,13 +36,19 @@ export default function NavBar() {
             {user.isSeller ? (
               <>
                 <Link passHref href="/myevents">
-                  <Nav.Link>My Events</Nav.Link>
+                  <Nav.Link>All My Events</Nav.Link>
+                </Link>
+                <Link passHref href="/myactiveevents">
+                  <Nav.Link>My Active Events</Nav.Link>
+                </Link>
+                <Link passHref href="/mypastevents">
+                  <Nav.Link>My Past Events</Nav.Link>
                 </Link>
                 <Link passHref href="/events/new">
                   <Nav.Link>Create New Event</Nav.Link>
                 </Link>
                 <Link passHref href="/myrevenue">
-                  <Nav.Link>My Ticket Sales</Nav.Link>
+                  <Nav.Link>Ticket Sales</Nav.Link>
                 </Link>
               </>
             ) : (

@@ -29,12 +29,12 @@ function Home() {
 
   useEffect(() => {
     hasOrderCheck(user.id).then(setOrder);
-  }, []);
+  }, [user.id]);
 
   return (
     <div className="shopping">
-      <h2>Events!</h2>
-      <div className="events">{events && events.map((event) => <EventCard event={event} />)}</div>
+      <h2>Buy Tickets to Events!</h2>
+      <div className="events">{activeEvents && activeEvents.map((event) => <EventCard event={event} />)}</div>
     </div>
   );
 }

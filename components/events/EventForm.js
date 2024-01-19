@@ -22,7 +22,7 @@ export default function EventForm({ event }) {
 
   useEffect(() => {
     if (event.id) {
-      setFormData({ name: event.name, ticketPrice: event.ticket.price, ticketsAvailable: event.ticketsAvailable, imageUrl: event.imageUrl, date: event.date, sellerId: user.id });
+      setFormData({ name: event.name, description: event.description, ticketPrice: event.ticket.price, ticketsAvailable: event.tickets_available, imageUrl: event.image_url, date: event.date, sellerId: user.id });
     }
   }, [event.id]);
 
