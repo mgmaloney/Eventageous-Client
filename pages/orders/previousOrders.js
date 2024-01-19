@@ -15,7 +15,7 @@ export default function PreviousOrders() {
     <>
       <div className="previous-orders">
         <h2>Past Orders</h2>
-        {previousOrders && previousOrders.map((order) => <OrderCard order={order} />)}
+        <div className="card-container">{previousOrders && previousOrders.map((order) => <OrderCard order={order} />)}</div>
       </div>
     </>
   );

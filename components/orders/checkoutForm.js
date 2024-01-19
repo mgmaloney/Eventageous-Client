@@ -5,35 +5,39 @@ import Form from 'react-bootstrap/Form';
 import { hasOrderCheck, updateOrder } from '../../utils/data/orderDate';
 import OrderContext from '../../utils/context/orderContext';
 import { useAuth } from '../../utils/context/authContext';
+import getPaymentTypes from '../../utils/data/categoryData';
 
 export default function CheckoutForm() {
   const router = useRouter();
   const { user } = useAuth();
   const { order, setOrder } = useContext(OrderContext);
-  const [isAddressSame, setIsAddressSame] = useState(false);
+  const [paymentTypes, setPaymentTypes] = useState([]);
+  const [total, setTotal] = useState();
 
   const [formData, setFormData] = useState({
-    paymentType: '',
-    total: 0,
+    paymentType: 1,
     billingAddress: '',
-    shippingAddress: '',
   });
 
   useEffect(() => {
-    let itemsTotal = 0;
-    if (order.items) {
-      order.items.forEach((item) => {
-        itemsTotal += Number(item.price);
+    let ticketsTotal = 0;
+    if (order.tickets) {
+      order.tickets.forEach((ticket) => {
+        ticketsTotal += Number(ticket.price);
       });
     }
-    setFormData({ ...formData, total: itemsTotal });
-  }, [order.items]);
+    setTotal(ticketsTotal);
+  }, [order, order.tickets]);
 
   useEffect(() => {
     if (order.id) {
       setFormData({ ...formData, customer: order.customer.id });
     }
   }, [order.id]);
+
+  useEffect(() => {
+    getPaymentTypes().then(setPaymentTypes);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,36 +49,45 @@ export default function CheckoutForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let date = new Date(Date.now());
+    let isoDate = date.toISOString();
     const payload = {
-      ...formData,
-      dateCompleted: Date.now(),
+      ...order,
+      paymentType: formData.paymentType,
+      total,
+      billingAddress: formData.billingAddress,
+      dateCompleted: isoDate,
       completed: true,
     };
-    updateOrder(payload)
+    updateOrder(order.id, payload)
       .then(() => hasOrderCheck(user.id))
       .then(setOrder)
-      .then(router.push('/ordercomplete'));
-  };
-
-  const handleAddressSame = () => {
-    if (isAddressSame) {
-      setIsAddressSame(false);
-    } else {
-      setIsAddressSame(true);
-    }
+      .then(router.push(`orders/orderComplete/${order.id}`));
   };
 
   return (
     <>
+      <h2>Checkout</h2>
+      <h3>Tickets on Order</h3>
+      <div className="checkout-tickets">
+        {order.tickets &&
+          order.tickets.map((ticket) => (
+            <div className="ticket-checkout">
+              <p>{ticket.event.name}</p>
+              <p>${ticket.price}</p>
+            </div>
+          ))}
+      </div>
+      <div className="total-div">
+        <h4 className="total">Total: ${total}</h4>
+      </div>
       <div className="checkout-form">
         <Form onSubmit={handleSubmit}>
           {/* FIRST NAME FIELD */}
           <Form.Group className="mb-3" controlId="paymentType">
             <Form.Label>Select Payment Type</Form.Label>
             <Form.Select name="paymentType" onChange={handleChange} value={formData.paymentType}>
-              <option value="credit">Credit</option>
-              <option value="paypal">Paypal</option>
-              <option value="google">Google Pay</option>
+              {paymentTypes && paymentTypes.map((paymentType) => <option value={paymentType.id}>{paymentType.name}</option>)}
             </Form.Select>
           </Form.Group>
 
@@ -83,25 +96,10 @@ export default function CheckoutForm() {
             <Form.Control name="billingAddress" required value={formData.billingAddress} onChange={handleChange} />
             <Form.Text className="text-muted" />
           </Form.Group>
-          <Form.Label>Is shipping address the same as the billing address?</Form.Label>
-          <input type="checkbox" onChange={handleAddressSame} />
-          {isAddressSame ? (
-            ''
-          ) : (
-            <Form.Group className="mb-3" controlId="shippingAddress">
-              <Form.Label>Shipping Address: </Form.Label>
-              <Form.Control name="shippingAddress" required value={formData.shippingAddress} onChange={handleChange} />
-              <Form.Text className="text-muted" />
-            </Form.Group>
-          )}
-
           <Button variant="primary" type="submit">
-            Submit
+            Checkout
           </Button>
         </Form>
-      </div>
-      <div className="total-div">
-        <h4 className="total">Total: ${formData.total}</h4>
       </div>
     </>
   );
