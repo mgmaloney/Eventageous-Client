@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import OrderContext from '../../utils/context/orderContext';
 import { addTicketToOrder, hasOrderCheck } from '../../utils/data/orderDate';
@@ -12,6 +13,15 @@ export default function EventCard({ event }) {
   const { order, setOrder } = useContext(OrderContext);
   const { user } = useAuth();
   const router = useRouter();
+  const [eventDate, setEventDate] = useState();
+  const [today, setToday] = useState();
+
+  useEffect(() => {
+    const todaysDate = Date.now();
+    const theEventDate = Date.parse(new Date(event.date));
+    setToday(todaysDate);
+    setEventDate(theEventDate);
+  }, [event]);
 
   const handleAddToCart = async () => {
     alert(`Ticket to ${event.name} added to cart!`);
@@ -53,12 +63,18 @@ export default function EventCard({ event }) {
             </Button>
           ) : (
             <>
-              <Link passHref href={`/events/edit/${event.id}`}>
-                <Button>Edit Event</Button>
-              </Link>
-              <Button variant="danger" onClick={handleDelete}>
-                Delete Event
-              </Button>
+              {today < eventDate ? (
+                <>
+                  <Link passHref href={`/events/edit/${event.id}`}>
+                    <Button>Edit Event</Button>
+                  </Link>
+                  <Button variant="danger" onClick={handleDelete}>
+                    Delete Event
+                  </Button>
+                </>
+              ) : (
+                ''
+              )}
             </>
           )}
         </Card.Body>

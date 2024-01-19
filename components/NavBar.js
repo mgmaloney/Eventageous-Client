@@ -31,7 +31,7 @@ export default function NavBar() {
               <Nav.Link>Home</Nav.Link>
             </Link>
             <Link passHref href="/mytickets">
-              <Nav.Link>My Tickets</Nav.Link>
+              <Nav.Link>My Orders</Nav.Link>
             </Link>
             {user.isSeller ? (
               <>
