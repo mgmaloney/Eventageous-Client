@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
 import { Card, Button } from 'react-bootstrap';
 import OrderContext from '../../utils/context/orderContext';
 import { addTicketToOrder, hasOrderCheck } from '../../utils/data/orderDate';
@@ -47,7 +48,7 @@ export default function EventCard({ event }) {
           <Card.Text>{event.description}</Card.Text>
           <Card.Text>Ticket Price: ${event.ticket?.price}</Card.Text>
           <Card.Text>Tickets Available: {event.tickets_available}</Card.Text>
-          <Card.Text>Date: {event.date}</Card.Text>
+          <Card.Text>Date and Time: {format(new Date(event.date), 'M-d-yyyy h:mmbbb')}</Card.Text>
           <Card.Text>
             Seller:{' '}
             <Link className="seller-link" passHref href={`/seller/${event.seller.id}`}>
