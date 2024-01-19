@@ -44,7 +44,7 @@ export default function CartTicket({ ticket, order, setOrder }) {
   };
 
   return (
-    <div className="cart-ticket-container">
+    <div className="card">
       <Card className="cart-ticket">
         <Card.Img className="cart-ticket-img" src={ticket.imageUrl} />
         <Card.Body>

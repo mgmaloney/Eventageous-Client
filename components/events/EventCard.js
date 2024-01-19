@@ -39,7 +39,7 @@ export default function EventCard({ event }) {
   };
 
   return (
-    <div className="event-card-container">
+    <div className="card">
       <Card className="event-card" style={{ width: '300px' }}>
         <Card.Header>{event.name}</Card.Header>
         <Card.Img variant="top" className="event-card-img" src={event.image_url} style={{ width: '200px' }} />

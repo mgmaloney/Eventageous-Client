@@ -14,7 +14,9 @@ export default function OrderComplete() {
 
   return (
     <>
-      <h2>Order Complete!</h2>
+      <div className="header">
+        <h2>Order Complete!</h2>
+      </div>
       <OrderCard order={order} />
     </>
   );

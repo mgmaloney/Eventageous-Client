@@ -28,8 +28,10 @@ export default function MyEvents() {
 
   return (
     <>
-      <h2>My Active Events</h2>
-      {myActiveEvents && myActiveEvents.map((event) => <EventCard event={event} />)}
+      <div className="header">
+        <h2>My Active Events</h2>
+      </div>
+      <div className="card-container">{myActiveEvents && myActiveEvents.map((event) => <EventCard event={event} />)}</div>
       {myActiveEvents.length === 0 ? (
         <>
           <h3>You don't have any active events.</h3>

@@ -13,7 +13,7 @@ export default function OrderCard({ order }) {
   }, [order.id, order]);
 
   return (
-    <>
+    <div className="card">
       <Card className="order-card">
         <Card.Title>Order on {order.date_completed}</Card.Title>
         <Card.Body>
@@ -28,6 +28,6 @@ export default function OrderCard({ order }) {
           ))}
         </Card.Body>
       </Card>
-    </>
+    </div>
   );
 }

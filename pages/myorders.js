@@ -14,8 +14,11 @@ export default function MyOrders() {
 
   return (
     <>
+      <div className="header">
+        <h2>My Orders</h2>
+      </div>
       {myCompletedOrders.length < 1 ? <h2>You have no orders</h2> : <h2>Your Orders</h2>}
-      {myCompletedOrders && myCompletedOrders.map((order) => <OrderCard order={order} />)}
+      <div className="card-container">{myCompletedOrders && myCompletedOrders.map((order) => <OrderCard order={order} />)}</div>
     </>
   );
 }

@@ -28,8 +28,10 @@ export default function MyEvents() {
 
   return (
     <>
-      <h2>My Past Events</h2>
-      {myPastEvents && myPastEvents.map((event) => <EventCard event={event} />)}
+      <div className="header">
+        <h2>My Past Events</h2>
+      </div>
+      <div className="card-container">{myPastEvents && myPastEvents.map((event) => <EventCard event={event} />)}</div>
       {myPastEvents.length === 0 ? (
         <>
           <h3>You don't have any past events.</h3>

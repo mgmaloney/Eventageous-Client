@@ -9,7 +9,7 @@ function Home() {
   const [events, setEvents] = useState([]);
   const [activeEvents, setActiveEvents] = useState([]);
   const { user } = useAuth();
-  const { order, setOrder } = useContext(OrderContext);
+  const { setOrder } = useContext(OrderContext);
 
   useEffect(() => {
     getAllEvents().then(setEvents);
@@ -33,8 +33,10 @@ function Home() {
 
   return (
     <div className="shopping">
-      <h2>Buy Tickets to Events!</h2>
-      <div className="events">{activeEvents && activeEvents.map((event) => <EventCard event={event} />)}</div>
+      <div className="header">
+        <h2>Buy Tickets to Events!</h2>
+      </div>
+      <div className="card-container">{activeEvents && activeEvents.map((event) => <EventCard event={event} />)}</div>
     </div>
   );
 }
