@@ -55,7 +55,7 @@ export default function MyRevenue() {
   useEffect(() => {
     let totalRevenue = 0;
     myTicketsSold.forEach((ticket) => {
-      totalRevenue += ticket.price;
+      totalRevenue += Number(ticket.price);
     });
     setMyTotalRevenue(totalRevenue);
   }, [myTicketsSold]);
