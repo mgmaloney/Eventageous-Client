@@ -23,7 +23,7 @@ export default function OrderCard({ order }) {
             {order.customer?.first_name} {order.customer?.last_name}
           </Card.Text>
           <Card.Text className="order-card-list-ticket">Payment Type: {order.payment_type?.name}</Card.Text>
-          <Card.Text className="order-card-list-ticket">Total: {order.total}</Card.Text>
+          <Card.Text className="order-card-list-ticket">Total: ${order.total}</Card.Text>
           <Card.Text className="order-card-list-ticket">Billing Address: {order.billing_address}</Card.Text>
           {orderTickets.map((ticket) => (
             <OrderTicket key={ticket.id} ticket={ticket} order={order} />
