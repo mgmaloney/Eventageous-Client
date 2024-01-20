@@ -112,3 +112,9 @@ h2 {
 .ticket-sales * {
   margin: 1rem;
 }
+
+.card-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

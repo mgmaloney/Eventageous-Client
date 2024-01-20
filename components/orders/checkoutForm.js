@@ -49,8 +49,8 @@ export default function CheckoutForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let date = new Date(Date.now());
-    let isoDate = date.toISOString();
+    const date = new Date(Date.now());
+    const isoDate = date.toISOString();
     const payload = {
       ...order,
       paymentType: formData.paymentType,

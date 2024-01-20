@@ -1,7 +1,7 @@
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder, removeTicketFromOrder, updateOrder } from '../../utils/data/orderDate';
+import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder } from '../../utils/data/orderDate';
 import { useAuth } from '../../utils/context/authContext';
 
 export default function CartTicket({ ticket, order, setOrder }) {
@@ -74,15 +74,55 @@ CartTicket.propTypes = {
     price: PropTypes.string,
     availableQuantity: PropTypes.number,
     imageUrl: PropTypes.string,
-    category: PropTypes.shape({
-      id: PropTypes.number,
-      description: PropTypes.string,
-    }),
     seller: PropTypes.shape({
       id: PropTypes.number,
       uid: PropTypes.string,
       first_name: PropTypes.string,
       last_name: PropTypes.string,
     }),
+    event: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      description: PropTypes.string,
+      date: PropTypes.string,
+      tickets_available: PropTypes.number,
+      image_url: PropTypes.string,
+      seller: PropTypes.shape({
+        id: PropTypes.number,
+        uid: PropTypes.string,
+        first_name: PropTypes.string,
+        last_name: PropTypes.string,
+      }),
+    }).isRequired,
   }).isRequired,
+  order: PropTypes.shape({
+    id: PropTypes.number,
+    total: PropTypes.string,
+    billing_address: PropTypes.string,
+    date_completed: PropTypes.string,
+    completed: PropTypes.bool,
+    tickets: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        price: PropTypes.string,
+        availableQuantity: PropTypes.number,
+        imageUrl: PropTypes.string,
+        seller: PropTypes.shape({
+          id: PropTypes.number,
+          uid: PropTypes.string,
+          first_name: PropTypes.string,
+          last_name: PropTypes.string,
+        }),
+        event: PropTypes.shape({
+          name: PropTypes.string,
+          description: PropTypes.string,
+          date: PropTypes.string,
+          tickets_available: PropTypes.number,
+          image_url: PropTypes.string,
+        }).isRequired,
+      })
+    ),
+  }).isRequired,
+  setOrder: PropTypes.func.isRequired,
 };

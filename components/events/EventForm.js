@@ -60,7 +60,7 @@ export default function EventForm({ event }) {
       </Form.Group>
       <Form.Group className="mb-3" controlId="ticketPrice">
         <Form.Label>Ticket Price</Form.Label>
-        <Form.Control type="float" name="ticketPrice" required value={formData.ticketPrice} onChange={handleChange} />
+        <Form.Control type="number" name="ticketPrice" required value={formData.ticketPrice} onChange={handleChange} />
         <Form.Text className="text-muted" />
       </Form.Group>
       <Form.Group className="mb-3" controlId="availableQuantity">
@@ -88,10 +88,11 @@ EventForm.propTypes = {
   event: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
+    description: PropTypes.string,
     date: PropTypes.string,
     price: PropTypes.number,
-    ticketsAvailable: PropTypes.number,
-    imageUrl: PropTypes.string,
+    tickets_available: PropTypes.number,
+    image_url: PropTypes.string,
     ticket: PropTypes.shape({
       price: PropTypes.string,
     }),
