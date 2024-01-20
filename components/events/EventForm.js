@@ -34,15 +34,15 @@ export default function EventForm({ event }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
       ...formData,
     };
     if (event.id) {
-      updateEvent(payload).then(router.push('/profile'));
+      await updateEvent(event.id, payload).then(router.push('/myevents'));
     } else {
-      createEvent(payload).then(router.push('/myevents'));
+      await createEvent(payload).then(router.push('/myevents'));
     }
   };
 
@@ -75,7 +75,7 @@ export default function EventForm({ event }) {
       </Form.Group>
       <Form.Label>Set a date and time for your event</Form.Label>
       <div className="date-submit">
-        <input type="datetime-local" name="date" onChange={handleChange} value={formData.date} />
+        <input type="datetime-local" name="date" onChange={handleChange} value={formData.date.slice(0, 16)} />
         <Button variant="primary" type="submit">
           Submit
         </Button>
