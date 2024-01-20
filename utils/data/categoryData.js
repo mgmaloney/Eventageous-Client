@@ -11,7 +11,6 @@ const getPaymentTypes = async () => {
     }
     return [];
   } catch (e) {
-    console.warn(e);
     return 'getPaymentTypes failed';
   }
 };

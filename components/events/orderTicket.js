@@ -1,6 +1,4 @@
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
 
 export default function OrderTicket({ order, ticket }) {
   const [numberInOrder, setNumberInOrder] = useState(0);

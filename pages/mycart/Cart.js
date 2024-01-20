@@ -18,7 +18,7 @@ export default function Cart() {
   return (
     <div className="order-container">
       <h2>Your Cart</h2>
-      <div className="order-items">{cartTickets.length > 0 && cartTickets?.map((ticket) => <CartTicket order={order} ticket={ticket} setOrder={setOrder} />)}</div>
+      <div className="order-items">{cartTickets.length > 0 && cartTickets?.map((ticket) => <CartTicket key={ticket.id} order={order} ticket={ticket} setOrder={setOrder} />)}</div>
       <Link passHref href="/mycart/checkout">
         <Button variant="primary">Checkout</Button>
       </Link>

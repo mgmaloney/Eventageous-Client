@@ -36,7 +36,7 @@ function Home() {
       <div className="header">
         <h2>Buy Tickets to Events!</h2>
       </div>
-      <div className="card-container">{activeEvents && activeEvents.map((event) => <EventCard event={event} />)}</div>
+      <div className="card-container">{activeEvents && activeEvents.map((event) => <EventCard key={event.id} event={event} />)}</div>
     </div>
   );
 }
