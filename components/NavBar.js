@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useContext } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   Navbar, //
@@ -10,11 +10,9 @@ import {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Cart } from 'react-bootstrap-icons';
 import { signOut } from '../utils/auth';
-import OrderContext from '../utils/context/orderContext';
 import { useAuth } from '../utils/context/authContext';
 
 export default function NavBar() {
-  const { order } = useContext(OrderContext);
   const { user } = useAuth();
 
   return (
@@ -30,7 +28,7 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link passHref href="/mytickets">
+            <Link passHref href="/myorders">
               <Nav.Link>My Orders</Nav.Link>
             </Link>
             {user.isSeller ? (

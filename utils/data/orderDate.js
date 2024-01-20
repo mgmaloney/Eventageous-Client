@@ -8,7 +8,6 @@ const hasOrderCheck = async (userId) => {
     const { data } = await axios.post(`${dbUrl}/users/${userId}/has_order`);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'hasOrderCheck failed';
   }
 };
@@ -18,7 +17,6 @@ const getSingleOrder = async (id) => {
     const { data } = await axios.get(`${dbUrl}/orders/${id}`);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'getSingleOrder failed';
   }
 };
@@ -30,7 +28,6 @@ const getDiscreteEventTickets = async (id) => {
     }
     return [];
   } catch (e) {
-    console.warn(e);
     return 'getSingleOrder failed';
   }
 };
@@ -43,7 +40,6 @@ const getPreviousOrders = async (userId) => {
     }
     return [];
   } catch (e) {
-    console.warn(e);
     return 'getAllItems failed';
   }
 };
@@ -53,7 +49,6 @@ const updateOrder = async (id, payload) => {
     const { data } = await axios.put(`${dbUrl}/orders/${id}`, payload);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'updateOrder failed';
   }
 };
@@ -62,7 +57,6 @@ const addTicketToOrder = async (orderId, payload) => {
     const { data } = await axios.put(`${dbUrl}/orders/${orderId}/add_ticket`, payload);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'updateOrder failed';
   }
 };
@@ -72,7 +66,6 @@ const changeTicketsInOrder = async (orderId, payload) => {
     const { data } = await axios.put(`${dbUrl}/orders/${orderId}/add_ticket?multiple=${payload.numberToAdd}`, payload);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'updateOrder failed';
   }
 };
@@ -81,7 +74,6 @@ const removeTicketFromOrder = async (orderId, payload) => {
     const { data } = await axios.put(`${dbUrl}/orders/${orderId}/remove_ticket`, payload);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'updateOrder failed';
   }
 };
@@ -90,7 +82,6 @@ const removeEventTicketsFromOrder = async (orderId, payload) => {
     const { data } = await axios.put(`${dbUrl}/orders/${orderId}/remove_ticket?all=True`, payload);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'updateOrder failed';
   }
 };
@@ -100,7 +91,6 @@ const getCompletedOrdersBySellerId = async (sellerId) => {
     const { data } = await axios.get(`${dbUrl}/orders/?sellerId=${sellerId}&completed=True`, payload);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'updateOrder failed';
   }
 };
@@ -113,9 +103,8 @@ const getAllOrders = async () => {
     }
     return [];
   } catch (e) {
-    console.warn(e);
     return 'getSingleOrder failed';
   }
 };
 
-export { hasOrderCheck, getAllOrders, getSingleOrder, getDiscreteEventTickets, getPreviousOrders, updateOrder, addTicketToOrder, changeTicketsInOrder, removeTicketFromOrder, removeEventTicketsFromOrder };
+export { getCompletedOrdersBySellerId, hasOrderCheck, getAllOrders, getSingleOrder, getDiscreteEventTickets, getPreviousOrders, updateOrder, addTicketToOrder, changeTicketsInOrder, removeTicketFromOrder, removeEventTicketsFromOrder };

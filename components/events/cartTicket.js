@@ -69,9 +69,9 @@ export default function CartTicket({ ticket, order, setOrder }) {
 
 CartTicket.propTypes = {
   ticket: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     availableQuantity: PropTypes.number,
     imageUrl: PropTypes.string,
     category: PropTypes.shape({

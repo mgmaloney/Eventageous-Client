@@ -65,10 +65,12 @@ export default function MyRevenue() {
       <div className="header">
         <h2>Tickets Sales</h2>
       </div>
-      <h3>Active Events: {myActiveEvents.length}</h3>
-      <h3>Past Events: {myPastEvents.length}</h3>
-      <h3>Tickets Sold: {myTicketsSold.length}</h3>
-      <h3>Total Revenue: ${myTotalRevenue}</h3>
+      <div className="ticket-sales">
+        <h3>Active Events: {myActiveEvents.length}</h3>
+        <h3>Past Events: {myPastEvents.length}</h3>
+        <h3>Tickets Sold: {myTicketsSold.length}</h3>
+        <h3>Total Revenue: ${myTotalRevenue}</h3>
+      </div>
     </>
   );
 }

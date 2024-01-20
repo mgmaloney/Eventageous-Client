@@ -18,7 +18,7 @@ export default function MyOrders() {
         <h2>My Orders</h2>
       </div>
       {myCompletedOrders.length < 1 ? <h2>You have no orders</h2> : <h2>Your Orders</h2>}
-      <div className="card-container">{myCompletedOrders && myCompletedOrders.map((order) => <OrderCard order={order} />)}</div>
+      <div className="card-container">{myCompletedOrders && myCompletedOrders.map((order) => <OrderCard key={order.id} order={order} />)}</div>
     </>
   );
 }

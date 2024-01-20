@@ -95,3 +95,20 @@ h2 {
 .cart-nav {
   margin: 0rem 1rem;
 }
+
+.btn {
+  margin: 0.25rem;
+}
+
+.ticket-sales {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 3rem;
+  background-color: white;
+}
+
+.ticket-sales * {
+  margin: 1rem;
+}

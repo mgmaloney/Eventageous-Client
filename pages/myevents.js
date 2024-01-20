@@ -18,7 +18,7 @@ export default function MyEvents() {
       <div className="header">
         <h2>My Events</h2>
       </div>
-      <div className="card-container">{myEvents && myEvents.map((event) => <EventCard event={event} />)}</div>
+      <div className="card-container">{myEvents && myEvents.map((event) => <EventCard key={event.id} event={event} />)}</div>
       {myEvents.length === 0 ? (
         <>
           <h3>You haven't added any events</h3>

@@ -62,7 +62,7 @@ export default function CheckoutForm() {
     updateOrder(order.id, payload)
       .then(() => hasOrderCheck(user.id))
       .then(setOrder)
-      .then(router.push(`orders/orderComplete/${order.id}`));
+      .then(router.push(`/orders/orderComplete/${order.id}`));
   };
 
   return (
@@ -72,7 +72,7 @@ export default function CheckoutForm() {
       <div className="checkout-tickets">
         {order.tickets &&
           order.tickets.map((ticket) => (
-            <div className="ticket-checkout">
+            <div className="ticket-checkout" key={ticket.id}>
               <p>{ticket.event.name}</p>
               <p>${ticket.price}</p>
             </div>
@@ -87,7 +87,12 @@ export default function CheckoutForm() {
           <Form.Group className="mb-3" controlId="paymentType">
             <Form.Label>Select Payment Type</Form.Label>
             <Form.Select name="paymentType" onChange={handleChange} value={formData.paymentType}>
-              {paymentTypes && paymentTypes.map((paymentType) => <option value={paymentType.id}>{paymentType.name}</option>)}
+              {paymentTypes &&
+                paymentTypes.map((paymentType) => (
+                  <option key={paymentType.id} value={paymentType.id}>
+                    {paymentType.name}
+                  </option>
+                ))}
             </Form.Select>
           </Form.Group>
 

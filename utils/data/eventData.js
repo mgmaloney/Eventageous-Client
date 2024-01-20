@@ -11,7 +11,6 @@ const getEventsBySellerId = async (sellerId) => {
     }
     return [];
   } catch (e) {
-    console.warn(e);
     return 'getEventsBySellerId failed';
   }
 };
@@ -24,7 +23,6 @@ const getAllEvents = async () => {
     }
     return [];
   } catch (e) {
-    console.warn(e);
     return 'getAllEvents failed';
   }
 };
@@ -34,7 +32,6 @@ const getSingleEvent = async (id) => {
     const { data } = await axios.get(`${dbUrl}/events/${id}`);
     return data;
   } catch (e) {
-    console.warn(e);
     return 'getSingleEvent failed';
   }
 };
@@ -44,7 +41,6 @@ const createEvent = async (payload) => {
     const response = await axios.post(`${dbUrl}/events`, payload);
     return response;
   } catch (e) {
-    console.warn(e);
     return 'createEvent failed';
   }
 };
@@ -54,7 +50,6 @@ const updateEvent = async (id, payload) => {
     const response = await axios.put(`${dbUrl}/events/${id}`, payload);
     return response;
   } catch (e) {
-    console.warn(e);
     return 'updateEvent failed';
   }
 };
@@ -64,7 +59,6 @@ const deleteEvent = async (id) => {
     const response = await axios.delete(`${dbUrl}/events/${id}`);
     return response;
   } catch (e) {
-    console.warn(e);
     return 'deleteEvent failed';
   }
 };

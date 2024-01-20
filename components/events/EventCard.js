@@ -86,7 +86,7 @@ export default function EventCard({ event }) {
 
 EventCard.propTypes = {
   event: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.number,
