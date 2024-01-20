@@ -31,7 +31,9 @@ export default function EventDetails() {
   };
 
   const handleDelete = async () => {
-    deleteEvent(event.id).then(router.push('/myevents'));
+    if (window.confirm(`Delete ${event.name}?`)) {
+      deleteEvent(event.id).then(router.push('/myevents'));
+    }
   };
 
   return (
