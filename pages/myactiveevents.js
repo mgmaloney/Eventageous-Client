@@ -31,7 +31,7 @@ export default function MyEvents() {
       <div className="header">
         <h2>My Active Events</h2>
       </div>
-      <div className="card-container">{myActiveEvents && myActiveEvents.map((event) => <EventCard event={event} />)}</div>
+      <div className="card-container">{myActiveEvents && myActiveEvents.map((event) => <EventCard key={event.id} event={event} />)}</div>
       {myActiveEvents.length === 0 ? (
         <>
           <h3>You don't have any active events.</h3>

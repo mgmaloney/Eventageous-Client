@@ -14,15 +14,10 @@ export default function EventDetails() {
   const { user } = useAuth();
   const { id } = router.query;
   const [event, setEvent] = useState({});
-  const [eventDate, setEventDate] = useState('');
 
   useEffect(() => {
     getSingleEvent(id).then(setEvent);
   }, [id]);
-
-  useEffect(() => {
-    setEventDate(new Date(event.date));
-  }, [event]);
 
   const handleAddToCart = async () => {
     alert(`Ticket to ${event.name} added to cart!`);

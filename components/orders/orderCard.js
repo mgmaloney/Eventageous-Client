@@ -1,8 +1,9 @@
 import { Card } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 import { getDiscreteEventTickets } from '../../utils/data/orderDate';
 import OrderTicket from '../events/orderTicket';
-import { format } from 'date-fns';
 
 export default function OrderCard({ order }) {
   const [orderTickets, setOrderTickets] = useState([]);
@@ -32,3 +33,45 @@ export default function OrderCard({ order }) {
     </div>
   );
 }
+
+OrderCard.propTypes = {
+  order: PropTypes.shape({
+    id: PropTypes.number,
+    total: PropTypes.string,
+    billing_address: PropTypes.string,
+    date_completed: PropTypes.string,
+    completed: PropTypes.bool,
+    tickets: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        price: PropTypes.string,
+        availableQuantity: PropTypes.number,
+        imageUrl: PropTypes.string,
+        seller: PropTypes.shape({
+          id: PropTypes.number,
+          uid: PropTypes.string,
+          first_name: PropTypes.string,
+          last_name: PropTypes.string,
+        }),
+        event: PropTypes.shape({
+          name: PropTypes.string,
+          description: PropTypes.string,
+          date: PropTypes.string,
+          tickets_available: PropTypes.number,
+          image_url: PropTypes.string,
+        }).isRequired,
+      })
+    ),
+    customer: PropTypes.shape({
+      id: PropTypes.number,
+      uid: PropTypes.string,
+      first_name: PropTypes.string,
+      last_name: PropTypes.string,
+    }).isRequired,
+    payment_type: PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+  }).isRequired,
+};

@@ -88,10 +88,11 @@ EventForm.propTypes = {
   event: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
+    description: PropTypes.string,
     date: PropTypes.string,
     price: PropTypes.number,
-    ticketsAvailable: PropTypes.number,
-    imageUrl: PropTypes.string,
+    tickets_available: PropTypes.number,
+    image_url: PropTypes.string,
     ticket: PropTypes.shape({
       price: PropTypes.string,
     }),

@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { Card, Button } from 'react-bootstrap';
 import OrderContext from '../../utils/context/orderContext';
@@ -35,9 +34,11 @@ export default function EventCard({ event }) {
     });
   };
 
-  const handleDelete = async () => {
-    deleteEvent(event.id).then(router.push('/myevents'));
-  };
+  // const handleDelete = () => {
+  //   if (window.confirm(`Delete ${event.name}?`)) {
+  //     deleteEvent(event.id).then(router.push('/myevents'));
+  //   }
+  // };
 
   return (
     <div className="card">
@@ -90,9 +91,11 @@ EventCard.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     price: PropTypes.number,
-    availableQuantity: PropTypes.number,
-    imageUrl: PropTypes.string,
+    tickets_available: PropTypes.number,
+    image_url: PropTypes.string,
+    date: PropTypes.string,
     ticket: PropTypes.shape({
+      id: PropTypes.number,
       price: PropTypes.string,
     }),
     seller: PropTypes.shape({
