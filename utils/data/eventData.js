@@ -56,10 +56,10 @@ const updateEvent = async (id, payload) => {
 
 const deleteEvent = async (id) => {
   try {
-    const response = await axios.delete(`${dbUrl}/events/${id}`);
-    return response;
+    const { data } = await axios.delete(`${dbUrl}/events/${id}`);
+    return data;
   } catch (e) {
-    return 'deleteEvent failed';
+    return 'Event could not be deleted.  Tickets have likely been sold for this event.  Please contact your support if you believe this is an error.';
   }
 };
 

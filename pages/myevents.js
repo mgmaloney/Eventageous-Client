@@ -11,7 +11,7 @@ export default function MyEvents() {
 
   useEffect(() => {
     getEventsBySellerId(user.id).then(setMyEvents);
-  }, [user.id]);
+  }, []);
 
   return (
     <>

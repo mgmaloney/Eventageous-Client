@@ -32,7 +32,14 @@ export default function EventDetails() {
 
   const handleDelete = async () => {
     if (window.confirm(`Delete ${event.name}?`)) {
-      deleteEvent(event.id).then(router.push('/myevents'));
+      const deleteResponse = await deleteEvent(event.id);
+      console.log('🚀 ~ handleDelete ~ deleteResponse:', deleteResponse);
+
+      if (deleteResponse.includes('error')) {
+        alert(`${deleteResponse}`);
+      } else {
+        router.push('/myevents');
+      }
     }
   };
 

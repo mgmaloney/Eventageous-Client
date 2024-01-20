@@ -106,5 +106,15 @@ const getAllOrders = async () => {
     return 'getSingleOrder failed';
   }
 };
+const getNumberInCart = async (id, payload) => {
+  try {
+    const { data } = await axios.put(`${dbUrl}/orders/${id}/ticket_number_in_cart`, payload);
 
-export { getCompletedOrdersBySellerId, hasOrderCheck, getAllOrders, getSingleOrder, getDiscreteEventTickets, getPreviousOrders, updateOrder, addTicketToOrder, changeTicketsInOrder, removeTicketFromOrder, removeEventTicketsFromOrder };
+    console.log('🚀 ~ getNumberInCart ~ data:', data);
+    return data.numberInCart;
+  } catch (e) {
+    return 'getSingleOrder failed';
+  }
+};
+
+export { getCompletedOrdersBySellerId, hasOrderCheck, getAllOrders, getSingleOrder, getDiscreteEventTickets, getPreviousOrders, updateOrder, addTicketToOrder, changeTicketsInOrder, removeTicketFromOrder, getNumberInCart, removeEventTicketsFromOrder };

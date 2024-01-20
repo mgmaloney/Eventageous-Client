@@ -1,34 +1,39 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
-import { changeTicketsInOrder, hasOrderCheck, removeEventTicketsFromOrder } from '../../utils/data/orderDate';
+import { changeTicketsInOrder, getDiscreteEventTickets, getNumberInCart, hasOrderCheck, removeEventTicketsFromOrder } from '../../utils/data/orderDate';
 import { useAuth } from '../../utils/context/authContext';
 
-export default function CartTicket({ ticket, order, setOrder }) {
-  const [numberInCart, setNumberInCart] = useState(0);
+export default function CartTicket({ ticket, order, setOrder, setCartTickets }) {
+  const [numberInCart, setNumberInCart] = useState();
+  const [numberNotZero, setNumberNotZero] = useState(false);
+  const [changed, setChanged] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
-    if (order.id) {
-      const arrayOfTickets = order.tickets?.filter((orderTicket) => orderTicket.id === ticket.id);
-      setNumberInCart(arrayOfTickets.length);
-    }
-  }, [order, order.tickets, ticket.id]);
+    getNumberInCart(order.id, { ticketId: ticket.id })
+      .then((response) => setNumberInCart(Number(response)))
+      .then(setNumberNotZero(true));
+  }, [ticket.id]);
 
   const handleRemoveTicketFromCart = async () => {
     if (window.confirm(`Remove all ${ticket.event.name} tickets from order?`)) {
-      removeEventTicketsFromOrder(order.id, { userId: user.id, ticketId: ticket.id }).then(async (response) => {
-        if (typeof response === 'string') {
-          await hasOrderCheck(user.id).then(setOrder);
-        } else {
-          await setOrder(response);
-        }
-      });
+      const removeResponse = await removeEventTicketsFromOrder(order.id, { userId: user.id, ticketId: ticket.id });
+      if (typeof response === 'string') {
+        const updatedOrder = await hasOrderCheck(user.id);
+        setOrder(updatedOrder);
+        const cartTickets = await getDiscreteEventTickets(order.id);
+        setCartTickets(cartTickets);
+      } else {
+        await setOrder(removeResponse);
+        const cartTickets = await getDiscreteEventTickets(order.id);
+        setCartTickets(cartTickets);
+      }
     }
   };
 
   useEffect(() => {
-    if (numberInCart > 0) {
+    if (numberInCart > 0 && changed) {
       changeTicketsInOrder(order.id, { userId: user.id, eventId: ticket.event.id, ticketId: ticket.id, numberToAdd: Number(numberInCart) }).then(async (response) => {
         if (typeof response === 'string') {
           await hasOrderCheck(user.id).then(setOrder);
@@ -40,7 +45,10 @@ export default function CartTicket({ ticket, order, setOrder }) {
   }, [numberInCart]);
 
   const handleQuantity = (e) => {
-    setNumberInCart(Number(e.target.value));
+    if (Number(e.target.value) !== 0) {
+      setNumberInCart(Number(e.target.value));
+      setChanged(true);
+    }
   };
 
   return (
@@ -55,7 +63,7 @@ export default function CartTicket({ ticket, order, setOrder }) {
           <Card.Text>${ticket.price}</Card.Text>
           <label>
             Quantity:
-            <input type="number" min="1" max={ticket.event.tickets_available} value={numberInCart} name="numberInCart" onChange={handleQuantity} />
+            {numberNotZero && numberInCart >= 1 ? <input type="number" min="0" max={ticket.event.tickets_available} value={Number(numberInCart)} name="numberInCart" onChange={handleQuantity} /> : ''}
           </label>
           <Card.Text className="ticket-quant-total">${ticket.price * numberInCart}</Card.Text>
           <Button variant="danger" onClick={handleRemoveTicketFromCart}>
@@ -125,4 +133,5 @@ CartTicket.propTypes = {
     ),
   }).isRequired,
   setOrder: PropTypes.func.isRequired,
+  setCartTickets: PropTypes.func.isRequired,
 };

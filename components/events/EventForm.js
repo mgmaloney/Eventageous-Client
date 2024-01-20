@@ -40,9 +40,11 @@ export default function EventForm({ event }) {
       ...formData,
     };
     if (event.id) {
-      await updateEvent(event.id, payload).then(router.push('/myevents'));
+      await updateEvent(event.id, payload);
+      router.push('/myevents');
     } else {
-      await createEvent(payload).then(router.push('/myevents'));
+      await createEvent(payload);
+      router.push('/myevents');
     }
   };
 
@@ -86,7 +88,7 @@ export default function EventForm({ event }) {
 
 EventForm.propTypes = {
   event: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
     date: PropTypes.string,
