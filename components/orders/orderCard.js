@@ -63,12 +63,6 @@ OrderCard.propTypes = {
         }).isRequired,
       })
     ),
-    customer: PropTypes.shape({
-      id: PropTypes.number,
-      uid: PropTypes.string,
-      first_name: PropTypes.string,
-      last_name: PropTypes.string,
-    }).isRequired,
     payment_type: PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,

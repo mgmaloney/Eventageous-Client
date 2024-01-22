@@ -86,7 +86,7 @@ const removeEventTicketsFromOrder = async (orderId, payload) => {
   }
 };
 
-const getCompletedOrdersBySellerId = async (sellerId) => {
+const getCompletedOrdersBySellerId = async (sellerId, payload) => {
   try {
     const { data } = await axios.get(`${dbUrl}/orders/?sellerId=${sellerId}&completed=True`, payload);
     return data;
@@ -109,8 +109,6 @@ const getAllOrders = async () => {
 const getNumberInCart = async (id, payload) => {
   try {
     const { data } = await axios.put(`${dbUrl}/orders/${id}/ticket_number_in_cart`, payload);
-
-    console.log('🚀 ~ getNumberInCart ~ data:', data);
     return data.numberInCart;
   } catch (e) {
     return 'getSingleOrder failed';

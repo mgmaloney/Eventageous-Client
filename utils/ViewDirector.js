@@ -13,7 +13,7 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
   const [order, setOrder] = useState({});
 
   useEffect(() => {
-    if (user) {
+    if (!userLoading && user.id) {
       hasOrderCheck(user.id).then(setOrder);
     }
   }, [user]);

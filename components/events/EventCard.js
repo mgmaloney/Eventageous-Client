@@ -25,6 +25,7 @@ export default function EventCard({ event }) {
 
   const handleAddToCart = async () => {
     alert(`Ticket to ${event.name} added to cart!`);
+    await hasOrderCheck(user.id).then(setOrder);
     addTicketToOrder(order.id, { userId: user.id, eventId: event.id, ticketId: event.ticket.id }).then(async (response) => {
       if (typeof response === 'string') {
         await hasOrderCheck(user.id).then(setOrder);
