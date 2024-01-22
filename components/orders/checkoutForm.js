@@ -71,8 +71,8 @@ export default function CheckoutForm() {
       <h3>Tickets on Order</h3>
       <div className="checkout-tickets">
         {order.tickets &&
-          order.tickets.map((ticket) => (
-            <div className="ticket-checkout" key={ticket.id}>
+          order.tickets.map((ticket, index) => (
+            <div className="ticket-checkout" key={`ticket_${index}`}>
               <p>{ticket.event.name}</p>
               <p>${ticket.price}</p>
             </div>
